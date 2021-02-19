@@ -34,7 +34,7 @@ class  UserPage extends React.Component {
                         <React.Fragment>
                             <tr>
                                 <td>
-                                    <input className="check-box" type="checkbox"
+                                    <input className="check-box select-all" type="checkbox"
                                            onChange = {() => {changeCheckState(user.id)}}
                                            value="" id={user.id}/>
                                 </td>
@@ -52,6 +52,7 @@ class  UserPage extends React.Component {
         }
 
         const changeCheckState = (id) => {
+            console.log(id)
             if(document.getElementById(id).checked === true)
             {
                 this.state.checked.push(id)
@@ -67,14 +68,18 @@ class  UserPage extends React.Component {
         }
 
         const deleteUser = () => {
+            let route = false
             getIdFromJwt(localStorage.getItem('jwt'))
             if(this.state.checked.indexOf(localStorage.getItem('curId') >= 0)) {
-                localStorage.setItem('jwt' , "")
-                window.location = '/'
+                route = true
             }
             this.state.checked.map((id) => {
                 requestForDelete(id)
             })
+            if(route) {
+                localStorage.setItem('jwt' , "")
+                window.location = '/'
+            }
         }
 
         const logOut  = () => {
@@ -98,7 +103,15 @@ class  UserPage extends React.Component {
                 <table className="table">
                     <thead>
                     <tr>
-                        <th scope="col">Select all/Deselect</th>
+                        <th scope="col">
+                            <input className="check-box" type="checkbox" id = "selectAllCheckbox"
+                                   onChange = {() => {let checkboxes = document.querySelectorAll('input.select-all')
+                                       .forEach((checkbox) => {checkbox.checked = document.getElementById("selectAllCheckbox").checked
+                                           if(checkbox.checked === true) {
+                                               this.state.checked.push(checkbox.id)
+                                           }})}}
+                                   value=""/>
+                        </th>
                         <th scope="col">#</th>
                         <th scope="col">Username</th>
                         <th scope="col">Email</th>
