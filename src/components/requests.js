@@ -1,12 +1,12 @@
 exports.blockUser = (id , block) => {
-    fetch("http://localhost:3005/blockUser",  {
+    fetch("https://task4-backend.herokuapp.com/blockUser",  {
         method: 'GET',
         headers:{'Content-Type': 'application/json', 'Auth' : localStorage.getItem('jwt') , 'Block' : block , 'Id' : id}
     }).then((response) => response.json()).then((res) => {console.log(res)})
 }
 
 exports.requestForDelete = (id) => {
-    fetch("http://localhost:3005/deleteUser",  {
+    fetch("https://task4-backend.herokuapp.com/deleteUser",  {
         method: 'GET',
         headers:{'Content-Type': 'application/json', 'Auth' : localStorage.getItem('jwt') , 'Delete' : "delete" , 'Id' : id}
     }).then((response) => response.json()).then((res) => {console.log(res)})
@@ -18,7 +18,7 @@ exports. validateUser = (name , password , email) => {
         document.getElementById("passwordHelp").classList.remove('hide-label')
     }
     document.getElementById("form").reset();
-    fetch("http://localhost:3005/auth", {
+    fetch("https://task4-backend.herokuapp.com/auth", {
         method: 'POST',
         headers: {'Content-Type': 'application/json', 'Auth': ""},
         body: JSON.stringify({name: name, password: password, email: email} )
@@ -36,7 +36,7 @@ exports. validateUser = (name , password , email) => {
 
 exports.registerUser = (name , password , email) =>  {
     document.getElementById("form").reset();
-    fetch("http://localhost:3005/reg", {
+    fetch("https://task4-backend.herokuapp.com/reg", {
         method: 'POST',
         headers: {'Content-Type': 'application/json', 'Auth': ""},
         body: JSON.stringify({name: name, password: password, email: email} )
@@ -46,7 +46,7 @@ exports.registerUser = (name , password , email) =>  {
 }
 
 exports.getIdFromJwt = () =>  {
-    fetch("http://localhost:3005/getCurrentId", {
+    fetch("https://task4-backend.herokuapp.com/getCurrentId", {
         method: 'GET',
         headers: {'Content-Type': 'application/json', 'Auth': localStorage.getItem('jwt')}
     })

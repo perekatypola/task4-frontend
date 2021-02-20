@@ -10,12 +10,12 @@ class  UserPage extends React.Component {
     }
 
     componentDidMount() {
-        fetch("http://localhost:3005/loadTable",  {
+        fetch("https://task4-backend.herokuapp.com/loadTable",  {
             method: 'GET',
             headers:{'Content-Type': 'application/json', 'Auth' : localStorage.getItem('jwt')}
         }).then((response) => response.json()).then((res) => {console.log(res)
             this.setState({table:res})})
-        fetch("http://localhost:3005/updateAuthDate",  {
+        fetch("https://task4-backend.herokuapp.com/updateAuthDate",  {
             method: 'GET',
             headers:{'Content-Type': 'application/json', 'Auth' : localStorage.getItem('jwt') , 'Block': null}
         }).then((response) => response.json()).then((res) => {console.log(res)
