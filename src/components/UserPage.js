@@ -77,6 +77,7 @@ class  UserPage extends React.Component {
                 requestForDelete(id)
             })
             if(route) {
+                route = false
                 localStorage.setItem('jwt' , "")
                 window.location = '/'
             }
