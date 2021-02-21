@@ -69,37 +69,10 @@ class  UserPage extends React.Component {
         }
 
         const deleteUser = () => {
-            // getIdFromJwt(localStorage.getItem('jwt'))
-            // if(this.state.checked.indexOf(localStorage.getItem('curId') >= 0)) {
-            //     localStorage.setItem('jwt' , "")
-            //     window.location = '/'
-            // }
+
             this.state.checked.map((id) => {
                 requestForDelete(id)
             })
-
-            // let route = false
-            // fetch("https://task4-backend.herokuapp.com/getCurrentId", {
-            //     method: 'GET',
-            //     headers: {'Content-Type': 'application/json', 'Auth': localStorage.getItem('jwt')}
-            // })
-            //     .then(response => response.json())
-            //     .then((result) => {localStorage.setItem('curId' , result.id)})
-            // if(this.state.checked.indexOf(localStorage.getItem('curId') >= 0)) {
-            //     route = true
-            //     console.log(this.state.checked)
-            // }
-            // this.state.checked.map((id) => {
-            //     fetch("https://task4-backend.herokuapp.com/deleteUser",  {
-            //         method: 'GET',
-            //         headers:{'Content-Type': 'application/json', 'Auth' : localStorage.getItem('jwt') , 'Delete' : "delete" , 'Id' : id}
-            //     }).then((response) => response.json()).then((res) => {if(route) {
-            //         route = false
-            //         localStorage.removeItem('jwt')
-            //         window.location = '/'
-            //     }
-            //     console.log(res)})
-            // })
 
         }
 
@@ -124,12 +97,11 @@ class  UserPage extends React.Component {
                 headers:{'Content-Type': 'application/json', 'Auth' : localStorage.getItem('jwt') , 'Delete' : "delete" , 'Id' : id}
             }).then((response) => response.json()).then((res) => {
                 let route = false
-                if(this.state.checked.indexOf(localStorage.getItem('curId')) >= 0) {
+                if(this.state.checked.forEach((a)=> {if(a === localStorage.getItem('curId')) {
                     route = true
                     console.log(this.state.checked)
-                }
+                }}))
                 if(route) {
-                            route = false
                             localStorage.removeItem('jwt')
                             window.location = '/'
                         }
