@@ -80,6 +80,7 @@ let validateUser = (name , password , email) => {
         .then(result => {
             console.log(result)
             if (result !== "blocked" && result !== "invalid") {
+                console.log(result)
                 localStorage.setItem('jwt', result)
                 window.location = '/user'
             }
