@@ -17,8 +17,7 @@ class  UserPage extends React.Component {
         fetch("https://task4-backend.herokuapp.com/updateAuthDate",  {
             method: 'GET',
             headers:{'Content-Type': 'application/json', 'Auth' : localStorage.getItem('jwt') , 'Block': null}
-        }).then((response) => response.json()).then((res) => {console.log(res)
-            this.setState({table:res})})
+        }).then((response) => response.json()).then((res) => {console.log(res)})
     };
 
     render ()
@@ -64,35 +63,44 @@ class  UserPage extends React.Component {
                 fetch("https://task4-backend.herokuapp.com/blockUser",  {
                     method: 'GET',
                     headers:{'Content-Type': 'application/json', 'Auth' : localStorage.getItem('jwt') , 'Block' : block , 'Id' : id}
-                }).then((response) => response.json()).then((res) => {console.log(res)})
+                }).then((response) => response.json()).then((res) => {console.log(res);  this.setState({checked:[]})
+                    window.location.reload()})
             })
-            this.setState({checked:[]})
-            window.location.reload()
         }
 
         const deleteUser = () => {
-            let route = false
-            fetch("https://task4-backend.herokuapp.com/getCurrentId", {
-                method: 'GET',
-                headers: {'Content-Type': 'application/json', 'Auth': localStorage.getItem('jwt')}
-            })
-                .then(response => response.json())
-                .then((result) => {localStorage.setItem('curId' , result.id)})
+            getIdFromJwt(localStorage.getItem('jwt'))
             if(this.state.checked.indexOf(localStorage.getItem('curId') >= 0)) {
-                route = true
-                console.log(this.state.checked)
-            }
-            this.state.checked.map((id) => {
-                fetch("https://task4-backend.herokuapp.com/deleteUser",  {
-                    method: 'GET',
-                    headers:{'Content-Type': 'application/json', 'Auth' : localStorage.getItem('jwt') , 'Delete' : "delete" , 'Id' : id}
-                }).then((response) => response.json()).then((res) => {console.log(res)})
-            })
-            if(route) {
-                route = false
-                localStorage.removeItem('jwt')
+                localStorage.setItem('jwt' , "")
                 window.location = '/'
             }
+            this.state.checked.map((id) => {
+                requestForDelete(id)
+            })
+
+            // let route = false
+            // fetch("https://task4-backend.herokuapp.com/getCurrentId", {
+            //     method: 'GET',
+            //     headers: {'Content-Type': 'application/json', 'Auth': localStorage.getItem('jwt')}
+            // })
+            //     .then(response => response.json())
+            //     .then((result) => {localStorage.setItem('curId' , result.id)})
+            // if(this.state.checked.indexOf(localStorage.getItem('curId') >= 0)) {
+            //     route = true
+            //     console.log(this.state.checked)
+            // }
+            // this.state.checked.map((id) => {
+            //     fetch("https://task4-backend.herokuapp.com/deleteUser",  {
+            //         method: 'GET',
+            //         headers:{'Content-Type': 'application/json', 'Auth' : localStorage.getItem('jwt') , 'Delete' : "delete" , 'Id' : id}
+            //     }).then((response) => response.json()).then((res) => {if(route) {
+            //         route = false
+            //         localStorage.removeItem('jwt')
+            //         window.location = '/'
+            //     }
+            //     console.log(res)})
+            // })
+
         }
 
         const logOut  = () => {
@@ -143,5 +151,20 @@ class  UserPage extends React.Component {
     }
 }
 
+let getIdFromJwt = () =>  {
+    fetch("https://task4-backend.herokuapp.com/getCurrentId", {
+        method: 'GET',
+        headers: {'Content-Type': 'application/json', 'Auth': localStorage.getItem('jwt')}
+    })
+        .then(response => response.json())
+        .then((result) => {localStorage.setItem('curId' , result.id);return result.id})
+}
+
+let requestForDelete = (id) => {
+    fetch("https://task4-backend.herokuapp.com/deleteUser",  {
+        method: 'GET',
+        headers:{'Content-Type': 'application/json', 'Auth' : localStorage.getItem('jwt') , 'Delete' : "delete" , 'Id' : id}
+    }).then((response) => response.json()).then((res) => {console.log(res)})
+}
 
 export default UserPage;
