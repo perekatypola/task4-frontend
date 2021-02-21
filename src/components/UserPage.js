@@ -1,5 +1,6 @@
 import React from "react";
-import {blockUser , requestForDelete ,getIdFromJwt} from './requests'
+import blockUser from'./requests'
+import {requestForDelete ,getIdFromJwt} from './requests'
 class  UserPage extends React.Component {
     constructor(props) {
         super(props);
