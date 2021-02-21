@@ -63,7 +63,7 @@ let registerUser =  (name , password , email) =>  {
         body: JSON.stringify({name: name, password: password, email: email} )
     })
     .then(response => response.text())
-    .then((res) => {return res})
+    .then((res) => { console.log(res)})
 }
 let validateUser = (name , password , email) => {
 
