@@ -57,7 +57,7 @@ function Auth() {
 }
 let registerUser =  (name , password , email) =>  {
     document.getElementById("form").reset();
-    let result = fetch("https://task4-backend.herokuapp.com/reg", {
+    fetch("https://task4-backend.herokuapp.com/reg", {
         method: 'POST',
         headers: {'Content-Type': 'application/json', 'Auth': ""},
         body: JSON.stringify({name: name, password: password, email: email} )
