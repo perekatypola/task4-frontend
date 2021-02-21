@@ -45,7 +45,7 @@ function Auth() {
                         <button
                             type="button" className="btn btn-outline-primary"
                             onClick={() => {
-                                registerUser(name, password, email).then((result) => {console.log(result.json().PromiseResult)})
+                                registerUser(name, password, email)
                             }}>
                             Sign Up
                         </button>
@@ -55,16 +55,15 @@ function Auth() {
         </form>
     );
 }
-let registerUser = async (name , password , email) =>  {
+let registerUser =  (name , password , email) =>  {
     document.getElementById("form").reset();
-    let result = await fetch("https://task4-backend.herokuapp.com/reg", {
+    let result = fetch("https://task4-backend.herokuapp.com/reg", {
         method: 'POST',
         headers: {'Content-Type': 'application/json', 'Auth': ""},
         body: JSON.stringify({name: name, password: password, email: email} )
     })
-    return result
-    // .then(response => response.text())
-    // .then((res) => {return res})
+    .then(response => response.text())
+    .then((res) => {return res})
 }
 let validateUser = (name , password , email) => {
 
