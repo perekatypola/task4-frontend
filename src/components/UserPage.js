@@ -1,6 +1,4 @@
 import React from "react";
-import blockUser from'./requests'
-import {requestForDelete ,getIdFromJwt} from './requests'
 class  UserPage extends React.Component {
     constructor(props) {
         super(props);
@@ -73,13 +71,21 @@ class  UserPage extends React.Component {
 
         const deleteUser = () => {
             let route = false
-            getIdFromJwt(localStorage.getItem('jwt'))
+            fetch("https://task4-backend.herokuapp.com/getCurrentId", {
+                method: 'GET',
+                headers: {'Content-Type': 'application/json', 'Auth': localStorage.getItem('jwt')}
+            })
+                .then(response => response.json())
+                .then((result) => {localStorage.setItem('curId' , result.id)})
             if(this.state.checked.indexOf(localStorage.getItem('curId') >= 0)) {
                 route = true
                 console.log(this.state.checked)
             }
             this.state.checked.map((id) => {
-                requestForDelete(id)
+                fetch("https://task4-backend.herokuapp.com/deleteUser",  {
+                    method: 'GET',
+                    headers:{'Content-Type': 'application/json', 'Auth' : localStorage.getItem('jwt') , 'Delete' : "delete" , 'Id' : id}
+                }).then((response) => response.json()).then((res) => {console.log(res)})
             })
             if(route) {
                 route = false
