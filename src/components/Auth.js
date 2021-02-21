@@ -1,6 +1,6 @@
 import './Auth.css';
 import React, {useState} from "react";
-import {validateUser , registerUser} from './requests'
+
 
 
 function Auth() {
@@ -55,5 +55,38 @@ function Auth() {
         </form>
     );
 }
+let registerUser = async (name , password , email) =>  {
+    document.getElementById("form").reset();
+    let result = await fetch("https://task4-backend.herokuapp.com/reg", {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json', 'Auth': ""},
+        body: JSON.stringify({name: name, password: password, email: email} )
+    })
+    return result
+    // .then(response => response.text())
+    // .then((res) => {return res})
+}
+let validateUser = (name , password , email) => {
+
+    if (name === "" || password === "" || email === "") {
+        document.getElementById("passwordHelp").classList.remove('hide-label')
+    }
+    document.getElementById("form").reset();
+    fetch("https://task4-backend.herokuapp.com/auth", {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json', 'Auth': ""},
+        body: JSON.stringify({name: name, password: password, email: email})
+    })
+        .then(response => response.text())
+        .then(result => {
+            console.log(result)
+            if (result !== "blocked" && result !== "invalid") {
+                localStorage.setItem('jwt', result)
+                window.location = '/user'
+            }
+        })
+}
+
+
 
 export default Auth;
