@@ -45,7 +45,7 @@ function Auth() {
                         <button
                             type="button" className="btn btn-outline-primary"
                             onClick={() => {
-                                registerUser(name, password, email)
+                                registerUser(name, password, email).then((result) => {console.log(result.json().PromiseResult)})
                             }}>
                             Sign Up
                         </button>

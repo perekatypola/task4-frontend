@@ -72,11 +72,13 @@ class  UserPage extends React.Component {
             getIdFromJwt(localStorage.getItem('jwt'))
             if(this.state.checked.indexOf(localStorage.getItem('curId') >= 0)) {
                 route = true
+                console.log(this.state.checked)
             }
             this.state.checked.map((id) => {
                 requestForDelete(id)
             })
             if(route) {
+                route = false
                 localStorage.setItem('jwt' , "")
                 window.location = '/'
             }

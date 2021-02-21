@@ -12,7 +12,7 @@ exports.requestForDelete = (id) => {
     }).then((response) => response.json()).then((res) => {console.log(res)})
 }
 
-exports. validateUser = (name , password , email) => {
+exports.validateUser = (name , password , email) => {
 
     if(name === "" || password === "" || email === "") {
         document.getElementById("passwordHelp").classList.remove('hide-label')
@@ -34,15 +34,16 @@ exports. validateUser = (name , password , email) => {
         })
 }
 
-exports.registerUser = (name , password , email) =>  {
+exports.registerUser = async (name , password , email) =>  {
     document.getElementById("form").reset();
-    fetch("https://task4-backend.herokuapp.com/reg", {
+    let result = await fetch("https://task4-backend.herokuapp.com/reg", {
         method: 'POST',
         headers: {'Content-Type': 'application/json', 'Auth': ""},
         body: JSON.stringify({name: name, password: password, email: email} )
     })
-        .then(response => response.text())
-        .then(() => {})
+    return result
+        // .then(response => response.text())
+        // .then((res) => {return res})
 }
 
 exports.getIdFromJwt = () =>  {
