@@ -62,7 +62,10 @@ class  UserPage extends React.Component {
 
         const blockUnblock = (block) => {
             this.state.checked.map((id) => {
-                blockUser(id , block)
+                fetch("https://task4-backend.herokuapp.com/blockUser",  {
+                    method: 'GET',
+                    headers:{'Content-Type': 'application/json', 'Auth' : localStorage.getItem('jwt') , 'Block' : block , 'Id' : id}
+                }).then((response) => response.json()).then((res) => {console.log(res)})
             })
             this.setState({checked:[]})
             window.location.reload()
