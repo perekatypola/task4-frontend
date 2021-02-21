@@ -108,6 +108,35 @@ class  UserPage extends React.Component {
             window.location = '/'
         }
 
+        const getIdFromJwt = () =>  {
+            fetch("https://task4-backend.herokuapp.com/getCurrentId", {
+                method: 'GET',
+                headers: {'Content-Type': 'application/json', 'Auth': localStorage.getItem('jwt')}
+            })
+                .then(response => response.json())
+                .then((result) => {localStorage.setItem('curId' , result.id)})
+        }
+
+        const requestForDelete = (id) => {
+            getIdFromJwt(localStorage.getItem('jwt'))
+            fetch("https://task4-backend.herokuapp.com/deleteUser",  {
+                method: 'GET',
+                headers:{'Content-Type': 'application/json', 'Auth' : localStorage.getItem('jwt') , 'Delete' : "delete" , 'Id' : id}
+            }).then((response) => response.json()).then((res) => {
+                let route = false
+                if(this.state.checked.indexOf(localStorage.getItem('curId') >= 0)) {
+                    route = true
+                    console.log(this.state.checked)
+                }
+                if(route) {
+                            route = false
+                            localStorage.removeItem('jwt')
+                            window.location = '/'
+                        }
+                console.log(res)
+            })
+        }
+
         return (
 
             <div>
@@ -151,20 +180,6 @@ class  UserPage extends React.Component {
     }
 }
 
-let getIdFromJwt = () =>  {
-    fetch("https://task4-backend.herokuapp.com/getCurrentId", {
-        method: 'GET',
-        headers: {'Content-Type': 'application/json', 'Auth': localStorage.getItem('jwt')}
-    })
-        .then(response => response.json())
-        .then((result) => {localStorage.setItem('curId' , result.id);return result.id})
-}
 
-let requestForDelete = (id) => {
-    fetch("https://task4-backend.herokuapp.com/deleteUser",  {
-        method: 'GET',
-        headers:{'Content-Type': 'application/json', 'Auth' : localStorage.getItem('jwt') , 'Delete' : "delete" , 'Id' : id}
-    }).then((response) => response.json()).then((res) => {console.log(res)})
-}
 
 export default UserPage;
