@@ -124,7 +124,7 @@ class  UserPage extends React.Component {
                 headers:{'Content-Type': 'application/json', 'Auth' : localStorage.getItem('jwt') , 'Delete' : "delete" , 'Id' : id}
             }).then((response) => response.json()).then((res) => {
                 let route = false
-                if(this.state.checked.indexOf(localStorage.getItem('curId') >= 0)) {
+                if(this.state.checked.indexOf(localStorage.getItem('curId')) >= 0) {
                     route = true
                     console.log(this.state.checked)
                 }
