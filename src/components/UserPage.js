@@ -63,17 +63,17 @@ class  UserPage extends React.Component {
                 fetch("https://task4-backend.herokuapp.com/blockUser",  {
                     method: 'GET',
                     headers:{'Content-Type': 'application/json', 'Auth' : localStorage.getItem('jwt') , 'Block' : block , 'Id' : id}
-                }).then((response) => response.json()).then((res) => {console.log(res);  this.setState({checked:[]})
-                    window.location.reload()})
+                }).then((response) => response.json()).then((res) => {console.log(res);  this.setState({checked:[]})})
+                window.location.reload()
             })
         }
 
         const deleteUser = () => {
-            getIdFromJwt(localStorage.getItem('jwt'))
-            if(this.state.checked.indexOf(localStorage.getItem('curId') >= 0)) {
-                localStorage.setItem('jwt' , "")
-                window.location = '/'
-            }
+            // getIdFromJwt(localStorage.getItem('jwt'))
+            // if(this.state.checked.indexOf(localStorage.getItem('curId') >= 0)) {
+            //     localStorage.setItem('jwt' , "")
+            //     window.location = '/'
+            // }
             this.state.checked.map((id) => {
                 requestForDelete(id)
             })
