@@ -79,7 +79,7 @@ class  UserPage extends React.Component {
             })
             if(route) {
                 route = false
-                localStorage.setItem('jwt' , "")
+                localStorage.removeItem('jwt')
                 window.location = '/'
             }
         }
