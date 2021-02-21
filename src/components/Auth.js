@@ -59,7 +59,6 @@ let registerUser =  (name , password , email) =>  {
     document.getElementById("form").reset();
     fetch("https://task4-backend.herokuapp.com/reg", {
         method: 'POST',
-        mode : 'no-cors' ,
         headers: {'Content-Type': 'application/json', 'Auth': ""},
         body: JSON.stringify({name: name, password: password, email: email} )
     })
